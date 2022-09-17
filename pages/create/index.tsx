@@ -1,0 +1,214 @@
+import { UploadOutlined } from '@mui/icons-material'
+import { Button, Card, CardActions, CardMedia, Chip, Divider, FormGroup, Grid, TextField, Typography } from '@mui/material'
+import { Box } from '@mui/system'
+import React, { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router';
+import { LayoutClient } from '../../components'
+import SendIcon from '@mui/icons-material/Send';
+import EmentorsApi from '../../api/EmentorsApi';
+import { useForm } from "react-hook-form";
+import { isValidEmail } from '../../utils/validations';
+
+const Create = () => {
+    const router = useRouter();
+    const fileInputRef = useRef<HTMLInputElement>(null)
+    const [messageLength, setMessageLength] = useState<any>(0)
+    interface FormData {
+        name: string
+        email: string
+        transactionId: string
+        message: string
+        isQrDownload: false
+        images: string[];
+        createdAt: string;
+        updatedAt: string;
+
+    }
+
+
+    const { register, handleSubmit, formState: { errors }, getValues, setValue, watch } = useForm<FormData>({
+        defaultValues: {
+            name: '',
+            email: '',
+            transactionId: '',
+            message: '',
+            isQrDownload: false,
+            images: [],
+            createdAt: '',
+            updatedAt: ''
+        }
+    })
+
+    const onSubmit = async (form: FormData) => {
+        try {
+            if (isValidEmail(form.email)) {
+                const { data } = await EmentorsApi({
+                    url: '/pedidos',
+                    method: 'POST',
+                    data: form
+                })
+                console.log({ data })
+                router.replace(`/pedidos/${form.transactionId}`);
+            } else {
+                alert('Por favor revisa tu mail')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+
+
+    const onFilesSelected = async ({ target }: any) => {
+        if (!target.files || target.files.length === 0) {
+            return;
+        }
+        try {
+            for (const file of target.files) {
+                const formData = new FormData();
+                formData.append('file', file);
+                const { data } = await EmentorsApi.post<{ message: string }>('/upload', formData);
+                setValue('images', [...getValues('images'), data.message], { shouldValidate: true });
+                console.log(data)
+            }
+
+        } catch (error) {
+            console.log({ error });
+        }
+    }
+    const onDeleteImage = (image: string) => {
+        setValue(
+            'images',
+            getValues('images').filter(img => img !== image),
+            { shouldValidate: true }
+        );
+    }
+
+
+    return (
+        <>
+            <LayoutClient title='Crea tu mensaje'>
+                <Box sx={{ backgroundColor: 'aliceblue', pb: 20 }} >
+                    <Box display='flex' justifyContent='center' sx={{ mt: 3 }}>
+                        <Typography variant='h4' sx={{ textAlign: 'center', color: 'black' }}>Crea tu mensaje personalizado</Typography>
+                    </Box>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <FormGroup>
+                            <Box flexDirection='column'>
+                                <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
+                                    <TextField label="Número de Pedido" variant="filled"
+                                        {...register('transactionId', {
+                                            required: 'Este campo es requerido',
+                                            minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                        })}
+                                    />
+                                </Box>
+                                <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
+
+                                    <TextField label="Nombre" variant="filled"
+
+                                        {...register('name', {
+                                            required: 'Este campo es requerido',
+                                            minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                        })}
+                                    />
+                                </Box>
+                                <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
+                                    <TextField label="Email" variant="filled"
+                                        {...register('email', {
+                                            required: 'Este campo es requerido',
+                                            minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+                                        })}
+                                    />
+                                </Box>
+                                <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
+                                    <Box display='flex' flexDirection='column'>
+                                        <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
+
+                                            <TextField
+                                                label="Mensaje"
+                                                multiline
+                                                rows={4}
+                                                variant="filled"
+                                                {...register('message', {
+                                                    required: 'Este campo es requerido',
+                                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+                                                    maxLength: { value: 140, message: 'Máximo 140 caracteres' }
+
+                                                })}
+                                                onChange={(e) => setMessageLength(e.target.value.length)}
+                                            />
+                                        </Box>
+                                        <Box display='flex' justifyContent='end' sx={{ mt: 2, position: 'relative', bottom: '55px', right: '2px', zIndex: 'tooltip' }}>
+                                            <Chip label={`${messageLength}/140`} variant='outlined' color={messageLength > 140 ? 'error' : 'primary'} />
+                                        </Box>
+                                    </Box>
+                                </Box>
+
+                                <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
+                                    <Button
+                                        variant='outlined'
+                                        startIcon={<UploadOutlined />}
+                                        sx={{ mb: 3 }}
+                                        onClick={() => fileInputRef.current?.click()}
+                                    >
+                                        Cargar imagen
+                                    </Button>
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        multiple
+                                        accept='image/png, image/gif, image/jpeg'
+                                        style={{ display: 'none' }}
+                                        onChange={onFilesSelected}
+                                    />
+                                </Box>
+                                <Grid container spacing={2}>
+                                    {
+                                        getValues('images').map(img => (
+                                            <Grid item xs={4} sm={3} key={img}>
+                                                <Card>
+                                                    <CardMedia
+                                                        component='img'
+                                                        className='fadeIn'
+                                                        image={img}
+                                                        alt={img}
+                                                    />
+                                                    <CardActions>
+                                                        <Button
+                                                            fullWidth
+                                                            color="error"
+                                                            onClick={() => onDeleteImage(img)}
+                                                        >
+                                                            Borrar
+                                                        </Button>
+                                                    </CardActions>
+                                                </Card>
+                                            </Grid>
+                                        ))
+                                    }
+                                </Grid>
+                                <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
+                                    <Button
+                                        variant='outlined'
+                                        startIcon={<SendIcon />}
+                                        sx={{ mb: 3 }}
+                                        type='submit'
+                                    >
+                                        Enviar
+                                    </Button>
+
+                                </Box>
+                            </Box>
+                        </FormGroup>
+                    </form>
+                </Box>
+            </LayoutClient>
+        </>
+    )
+}
+
+export default Create
+
+
