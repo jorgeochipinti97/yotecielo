@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useEffect, useRef, useState } from 'react'
-import { LayoutAdmin, Slider } from '../components'
+import { LayoutAdmin } from '../components'
 import { dbPedidos } from '../database'
 import { pedido } from '../interfaces'
 import QrCodeIcon from '@mui/icons-material/QrCode';
