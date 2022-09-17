@@ -19,7 +19,7 @@ const PedidosPage: NextPage<Props> = ({ pedido }) => {
     const styles = {
         paperContainer: {
             minHeigth: '100vh',
-            backgroundImage: `url(http://localhost:3000/bg.jpeg)`,
+            backgroundImage: `url(https://yotecielo.vercel.app//bg.jpeg)`,
             backgroundRepeat: 'no-repeat'
         }
     };
