@@ -28,7 +28,7 @@ const PedidosPage: NextPage<Props> = ({ pedido }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             setIsLoading(true)
-        }, 5000);
+        }, 2000);
 
         return () => clearInterval(interval)
     }, []);
@@ -42,27 +42,34 @@ const PedidosPage: NextPage<Props> = ({ pedido }) => {
                         ? <FullScreenLoading />
                         :
                         <>
-                            <SlideShow images={pedido.images} />
+                            <div data-aos="fade-down">
+                                <SlideShow images={pedido.images} />
+                            </div>
                             <Box display='flex' justifyContent='center'>
+
                                 <Box >
-                                    <Box sx={{ maxWidth: '100vw' }}>
+                                <div data-aos="fade-right">
+                                        <Box sx={{ maxWidth: '100vw' }}>
+                                            <Box display='flex' justifyContent='center'>
+                                            </Box>
+                                            <Box style={styles.paperContainer} sx={{ p: 1 }}>
+                                                <Typography variant='h6' sx={{ fontFamily: 'Itim', color: 'black', textAlign: 'start', ml: 1 }}>
+                                                    {capitalize.capitalizarPrimeraLetraPalabras(pedido.name)}
+                                                </Typography>
+                                                <Typography sx={{ fontFamily: 'Itim', color: 'black', textAlign: 'justify' }}>
+                                                    {capitalize.capitalizarPrimeraLetraSolamente(pedido.message)}
+                                                </Typography>
+                                                <Typography sx={{ fontFamily: 'Itim', color: 'black', textAlign: 'end', mr: 2 }}>
+                                                    {`${new Date(pedido.createdAt!).toLocaleDateString("es-ES", { year: 'numeric', month: 'long', day: 'numeric' })}`}
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                    </div>
+                                    <div data-aos="fade-left">
                                         <Box display='flex' justifyContent='center'>
+                                            <Image src='/foto.png' width={500} height={500} alt='foto' />
                                         </Box>
-                                        <Box style={styles.paperContainer} sx={{ p: 1 }}>
-                                            <Typography variant='h6' sx={{ fontFamily: 'Itim', color: 'black', textAlign: 'start', ml: 1 }}>
-                                                {capitalize.capitalizarPrimeraLetraPalabras(pedido.name)}
-                                            </Typography>
-                                            <Typography sx={{ fontFamily: 'Itim', color: 'black', textAlign: 'justify' }}>
-                                                {capitalize.capitalizarPrimeraLetraSolamente(pedido.message)}
-                                            </Typography>
-                                            <Typography sx={{ fontFamily: 'Itim', color: 'black', textAlign: 'end', mr: 2 }}>
-                                                {`${new Date(pedido.createdAt!).toLocaleDateString("es-ES", { year: 'numeric', month: 'long', day: 'numeric' })}`}
-                                            </Typography>
-                                        </Box>
-                                    </Box>
-                                    <Box display='flex' justifyContent='center'>
-                                        <Image src='/foto.png' width={500} height={500} alt='foto' />
-                                    </Box>
+                                    </div>
                                 </Box>
                             </Box>
 
