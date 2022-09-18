@@ -42,13 +42,11 @@ const PedidosPage: NextPage<Props> = ({ pedido }) => {
                         ? <FullScreenLoading />
                         :
                         <>
-                            <div data-aos="fade-down">
-                                <SlideShow images={pedido.images} />
-                            </div>
+                            <SlideShow images={pedido.images} />
                             <Box display='flex' justifyContent='center'>
 
                                 <Box >
-                                <div data-aos="fade-right">
+                                    <div data-aos="fade-right">
                                         <Box sx={{ maxWidth: '100vw' }}>
                                             <Box display='flex' justifyContent='center'>
                                             </Box>
