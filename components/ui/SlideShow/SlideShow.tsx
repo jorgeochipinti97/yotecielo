@@ -13,8 +13,8 @@ interface Props {
 export const SlideShow: FC<Props> = ({ images }) => {
     return (
         <Box>
-            <div className="slide-container">
-                <div data-aos="fade-down">
+            <div data-aos="fade-down">
+                <div className="slide-container">
                     <Slide
                         easing="ease"
                         duration={5000}
@@ -28,6 +28,6 @@ export const SlideShow: FC<Props> = ({ images }) => {
                     </Slide>
                 </div>
             </div>
-        </Box>
+        </Box >
     )
 }
