@@ -54,7 +54,7 @@ const PedidosAdminPage: NextPage = () => {
 
         try {
             await EmentorsApi.put('/pedidos', newPedido)
-            const url = await QRcode.toDataURL(`https://yotecielo.vercel.app/${pedido___.transactionId}`)
+            const url = await QRcode.toDataURL(`https://yotecielo.vercel.app/pedidos/${pedido___.transactionId}`)
             setQr_(url)
             setTransactionId__(pedido___.transactionId)
         } catch (err) {
