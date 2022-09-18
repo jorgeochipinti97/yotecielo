@@ -15,19 +15,19 @@ export const SlideShow: FC<Props> = ({ images }) => {
         <Box>
             <div className="slide-container">
                 <Box>
-                        <Slide
-                            easing="ease"
-                            duration={5000}
-                            arrows={true}
-                        >
-                            {images.map((e, index) => (
-                                <div className="each-slide-effect">
-                                    <Box key={index} display='flex' justifyContent='center'>
-                                        <Image src={e} width={500} height={500} />
-                                    </Box>
-                                </div>
-                            ))}
-                        </Slide>
+                    <Slide
+                        easing="ease"
+                        duration={5000}
+                        arrows={true}
+                    >
+                        {images.map((e, index) => (
+                            <div className="each-slide-effect" key={index}>
+                                <Box display='flex' justifyContent='center'>
+                                    <Image src={e} width={500} height={500} />
+                                </Box>
+                            </div>
+                        ))}
+                    </Slide>
                 </Box >
             </div>
         </Box>
