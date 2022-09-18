@@ -28,7 +28,7 @@ const PedidosPage: NextPage<Props> = ({ pedido }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             setIsLoading(true)
-        }, 3000);
+        }, 5000);
 
         return () => clearInterval(interval)
     }, []);

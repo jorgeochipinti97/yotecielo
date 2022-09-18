@@ -10,13 +10,6 @@ interface Props {
     images: string[]
 }
 
-const styles = {
-    paperContainer: {
-        backgroundImage: `url(https://yotecielo.vercel.app//bg.jpeg)`,
-        backgroundRepeat: 'no-repeat'
-    }
-};
-
 export const SlideShow: FC<Props> = ({ images }) => {
     return (
         <Box>
