@@ -21,11 +21,10 @@ export const CardPedido: FC<Props> = ({ pedido }) => {
     };
     return (
         <>
-                        <div data-aos="fade-left">
+            <div data-aos="fade-left">
                 <SlideShow images={pedido.images} />
                 <Box display='flex' justifyContent='center'>
                     <Box >
-                        <div data-aos="fade-right">
                             <Box sx={{ maxWidth: '100vw' }}>
                                 <Box display='flex' justifyContent='center'>
                                 </Box>
@@ -41,7 +40,7 @@ export const CardPedido: FC<Props> = ({ pedido }) => {
                                     </Typography>
                                 </Box>
                             </Box>
-                        </div>
+             
                         <div data-aos="fade-left">
                             <Box display='flex' justifyContent='center'>
                                 <Image src='/foto.png' width={500} height={500} alt='foto' />
