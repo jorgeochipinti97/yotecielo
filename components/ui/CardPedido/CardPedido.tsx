@@ -21,7 +21,7 @@ export const CardPedido: FC<Props> = ({ pedido }) => {
     };
     return (
         <>
-            <div data-aos="fade-right">
+                        <div data-aos="fade-left">
                 <SlideShow images={pedido.images} />
                 <Box display='flex' justifyContent='center'>
                     <Box >
