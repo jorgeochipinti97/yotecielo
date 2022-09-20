@@ -24,7 +24,6 @@ const PedidosPage: NextPage<Props> = ({ pedido }) => {
     return (
         <>
             <LayoutClient title='Yo te cielo'>
-
                 {
                     !loading
                         ? <FullScreenLoading />

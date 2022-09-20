@@ -8,22 +8,27 @@ import SendIcon from '@mui/icons-material/Send';
 import EmentorsApi from '../../api/EmentorsApi';
 import { useForm } from "react-hook-form";
 import { isValidEmail } from '../../utils/validations';
+import { pedido } from '../../interfaces'
+import QRcode from 'qrcode';
 
+interface FormData {
+    name: string
+    email: string
+    transactionId: string
+    message: string
+    isQrDownload: false
+    images: string[];
+    createdAt: string;
+    updatedAt: string;
+
+}
 const Create = () => {
     const router = useRouter();
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [messageLength, setMessageLength] = useState<any>(0)
-    interface FormData {
-        name: string
-        email: string
-        transactionId: string
-        message: string
-        isQrDownload: false
-        images: string[];
-        createdAt: string;
-        updatedAt: string;
+    const AnchorRef = useRef<HTMLAnchorElement>(null)
+    const [qr_, setQr_] = useState<string>()
 
-    }
 
 
     const { register, handleSubmit, formState: { errors }, getValues, setValue, watch } = useForm<FormData>({
@@ -32,7 +37,6 @@ const Create = () => {
             email: '',
             transactionId: '',
             message: '',
-            isQrDownload: false,
             images: [],
             createdAt: '',
             updatedAt: ''
@@ -41,6 +45,8 @@ const Create = () => {
 
     const onSubmit = async (form: FormData) => {
         try {
+
+         
             if (isValidEmail(form.email)) {
                 const { data } = await EmentorsApi({
                     url: '/pedidos',
@@ -57,8 +63,6 @@ const Create = () => {
         }
 
     }
-
-
 
     const onFilesSelected = async ({ target }: any) => {
         if (!target.files || target.files.length === 0) {
@@ -85,7 +89,15 @@ const Create = () => {
         );
     }
 
+    const createQR = async (transactionId: string) => {
 
+        try {
+            const url = await QRcode.toDataURL(`https://yotecielo.vercel.app/pedidos/${transactionId}`)
+            setQr_(url)
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <>
             <LayoutClient title='Crea tu mensaje'>

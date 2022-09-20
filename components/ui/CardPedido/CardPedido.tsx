@@ -15,7 +15,7 @@ export const CardPedido: FC<Props> = ({ pedido }) => {
     const styles = {
         paperContainer: {
             minHeigth: '100vh',
-            backgroundImage: `url(https://yotecielo.vercel.app//bg.jpeg)`,
+            backgroundImage: `url(https://yotecielo.vercel.app/bg.jpeg)`,
             backgroundRepeat: 'no-repeat'
         }
     };
@@ -40,7 +40,6 @@ export const CardPedido: FC<Props> = ({ pedido }) => {
                                     </Typography>
                                 </Box>
                             </Box>
-             
                         <div data-aos="fade-left">
                             <Box display='flex' justifyContent='center'>
                                 <Image src='/foto.png' width={500} height={500} alt='foto' />

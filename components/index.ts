@@ -1,3 +1,5 @@
 export * from './Layout'
 export * from './Footer'
 export * from './ui'
+export * from './Card'
+export * from './qrcode'

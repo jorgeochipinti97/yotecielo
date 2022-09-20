@@ -1,33 +1,19 @@
-import { Box, Button, Card, CardMedia, Divider, Grid, IconButton, Input, InputAdornment, Typography } from '@mui/material'
-import type { GetServerSideProps, NextPage } from 'next'
-import { useEffect, useRef, useState } from 'react'
-import { LayoutAdmin } from '../../components'
-import { dbPedidos } from '../../database'
-import { pedido } from '../../interfaces'
-import QrCodeIcon from '@mui/icons-material/QrCode';
-import Image from 'next/image'
+import { Box, Card, Grid, IconButton, Input, InputAdornment, Typography } from '@mui/material'
+import type { NextPage } from 'next'
+import { useEffect, useState } from 'react'
+import { CardComponent, LayoutAdmin } from '../../components'
+
 import { SearchOutlined } from '@mui/icons-material';
-import QRcode from 'qrcode';
-import EmentorsApi from '../../api/EmentorsApi';
-import VerifiedIcon from '@mui/icons-material/Verified';
+
 import { usePedidos } from '../../hooks'
-import { FullScreenLoading } from '../../components/FullScreenLoading'
 
 
 
 
 const PedidosAdminPage: NextPage = () => {
-    const AnchorRef = useRef<HTMLAnchorElement>(null)
-    const [qr_, setQr_] = useState<string>()
-    const [transactionId__, setTransactionId__] = useState<string>()
     const [searchTerm, setSearchTerm] = useState<string>()
     const { pedidos, isLoading } = usePedidos('/pedidos')
     const [pedidos_, setPedidos_] = useState(pedidos)
-
-    useEffect(() => {
-        qr_ != undefined && download()
-    }, [qr_])
-
 
     useEffect(() => {
         const newPedidos = searchTerm && pedidos_.filter(e => e.transactionId.includes(searchTerm))
@@ -38,34 +24,7 @@ const PedidosAdminPage: NextPage = () => {
     }, [searchTerm])
 
 
-    const createQR = async (pedido___: pedido) => {
 
-        const newPedido: pedido = {
-            _id: pedido___._id,
-            name: pedido___.name,
-            email: pedido___.email,
-            transactionId: pedido___.transactionId,
-            message: pedido___.message,
-            images: pedido___.images,
-            isQrDownload: true,
-            createdAt: pedido___.createdAt,
-            updatedAt: pedido___.updatedAt
-        }
-
-        try {
-            await EmentorsApi.put('/pedidos', newPedido)
-            const url = await QRcode.toDataURL(`https://yotecielo.vercel.app/pedidos/${pedido___.transactionId}`)
-            setQr_(url)
-            setTransactionId__(pedido___.transactionId)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    const download = () => {
-        AnchorRef.current?.click()
-
-    }
 
     return (
         <>
@@ -85,42 +44,17 @@ const PedidosAdminPage: NextPage = () => {
                         }
                     />
                 </Box>
-
-
-                <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', sm: 'center', md: 'space-between', lg: 'space-between' } }}>
+                <Grid container spacing={2} sx={{justifyContent: { xs: 'center', sm: 'center', md: 'space-between', lg: 'space-between' } }}>
                     {pedidos_.map(e => (
-                        <Grid item xs={8} md={2} sx={{ m: 1 }} key={e.transactionId}>
-                            <Box display='flex' justifyContent='center' >
-                                <Card key={e.transactionId} sx={{ width: 300 }}>
-                                    {e.isQrDownload && (
-                                        <Box display='flex' justifyContent='end'>
-                                            < VerifiedIcon />
-                                        </Box>
-                                    )
-                                    }
-                                    <Typography variant='subtitle1' sx={{ textAlign: 'center' }}>{e.transactionId}</Typography>
-                                    <Typography variant='body1' sx={{ textAlign: 'center' }}>{e.name}</Typography>
-                                    <Typography variant='body1' sx={{ textAlign: 'center' }}>{e.message.slice(0, 10)}...</Typography>
-                                    <Box display='flex' justifyContent='center'>
-                                        <Button
-                                            variant='outlined'
-                                            startIcon={<QrCodeIcon />}
-                                            sx={{ m: 3 }}
-                                            onClick={() => createQR(e)}>
-                                            Descargar QR
-                                        </Button>
-                                    </Box>
-                                </Card>
+                        <Grid item xs={8} md={4} key={e.transactionId}>
+                            <Box sx={{ m: 2 }}>
+                                <CardComponent pedidoQr={`https://yotecielo.vercel.app/pedidos/${e.transactionId}`} numeroDePedido={e.transactionId} name={e.name} />
                             </Box>
                         </Grid>
                     ))
                     }
                 </Grid>
-
-
-
-                <a ref={AnchorRef} href={`${qr_}`} download={`${transactionId__}`} style={{ display: 'none' }} />
-            </LayoutAdmin>
+            </LayoutAdmin >
         </>
     )
 }

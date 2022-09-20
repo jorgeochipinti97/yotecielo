@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useEffect, useRef, useState } from 'react'
-import { LayoutAdmin } from '../components'
+import { CardComponent, LayoutAdmin } from '../components'
 import { dbPedidos } from '../database'
 import { pedido } from '../interfaces'
 import QrCodeIcon from '@mui/icons-material/QrCode';
@@ -36,7 +36,6 @@ const Home: NextPage = () => {
                 <SummaryTile title='Pedidos' subTitle={`${pedidos.length}`} icon={<QrCodeIcon sx={{ fontSize: 40 }} />} />
               </Box>
               <Box sx={{ m: 1 }}>
-
                 <SummaryTile
                   title='Actualización en'
                   subTitle={refreshIn}

@@ -6,7 +6,6 @@ const pedidoSchema = new Schema({
     email: { type: String },
     transactionId: { type: String, unique: true },
     message: { type: String },
-    isQrDownload: { type: Boolean, default: false },
     images: [{ type: String }],
 }, {
     timestamps: true,
