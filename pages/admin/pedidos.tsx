@@ -40,7 +40,7 @@ const PedidosAdminPage: NextPage = () => {
                         }
                     />
                 </Box>
-                <Box display='flex' justifyContent='space-around'>
+                <Box display='flex' justifyContent='space-around' flexWrap='wrap'>
                     {pedidos_.map(e => (
                         <Box key={e.transactionId}>
                             <CardComponent pedidoQr={`https://yotecielo.vercel.app/pedidos/${e.transactionId}`} numeroDePedido={e.transactionId} name={e.name} />
