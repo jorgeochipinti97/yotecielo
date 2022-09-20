@@ -2,12 +2,8 @@ import { Box, Card, Grid, IconButton, Input, InputAdornment, Typography } from '
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { CardComponent, LayoutAdmin } from '../../components'
-
 import { SearchOutlined } from '@mui/icons-material';
-
 import { usePedidos } from '../../hooks'
-
-
 
 
 const PedidosAdminPage: NextPage = () => {
@@ -29,7 +25,7 @@ const PedidosAdminPage: NextPage = () => {
     return (
         <>
             <LayoutAdmin title='Admin - Pedidos'>
-                <Box display='flex' justifyContent='center' sx={{ mt: 3 }}>
+                <Box display='flex' justifyContent='center' sx={{ mt: 3, mb: 2 }}>
                     <Input
                         type='text'
                         placeholder="Número de pedido..."
