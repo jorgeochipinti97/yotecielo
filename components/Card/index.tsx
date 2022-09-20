@@ -47,7 +47,7 @@ export const CardComponent: FC<Props> = ({ pedidoQr, numeroDePedido, name }) => 
   return (
     <>
       <Box display='flex' flexDirection='column' >
-        <Box display='flex' justifyContent='center' ref={printRef} sx={{widht:500}} >
+        <Box display='flex' justifyContent='center' ref={printRef} sx={{ widht: 500 }} >
           <Box>
             <Box sx={{ backgroundColor: 'white', color: 'black' }}>
               <Typography sx={{ textAlign: 'center' }} variant='h5'>Numero de Pedido: {numeroDePedido}</Typography>
@@ -67,7 +67,7 @@ export const CardComponent: FC<Props> = ({ pedidoQr, numeroDePedido, name }) => 
       </Box>
 
 
-      <Box display='flex' justifyContent='center' sx={{ mt: 3 }}>
+      <Box display='flex' justifyContent='center' sx={{ mt: 2, mb: 3 }}>
         <Button
           variant='contained'
           color='success'
