@@ -50,9 +50,9 @@ export const CardComponent: FC<Props> = ({ pedidoQr, numeroDePedido, name }) => 
         <Box display='flex' justifyContent='center' ref={printRef} sx={{widht:500}} >
           <Box>
             <Box sx={{ backgroundColor: 'white', color: 'black' }}>
-              <Typography sx={{ textAlign: 'center' }} variant='h5'>{capitalizarPrimeraLetraSolamente(name)}</Typography>
               <Typography sx={{ textAlign: 'center' }} variant='h5'>Numero de Pedido: {numeroDePedido}</Typography>
-              <Typography sx={{ textAlign: 'center' }} variant='h5'> {`${new Date().toLocaleDateString("es-ES", { year: 'numeric', month: 'long', day: 'numeric' })}`} </Typography>
+              <Typography sx={{ textAlign: 'center' }} variant='h6'>{capitalizarPrimeraLetraSolamente(name)}</Typography>
+              <Typography sx={{ textAlign: 'center' }} variant='h6'> {`${new Date().toLocaleDateString("es-ES", { year: 'numeric', month: 'long', day: 'numeric' })}`} </Typography>
               <Divider />
             </Box>
             <Box sx={{ backgroundColor: 'white' }}  >

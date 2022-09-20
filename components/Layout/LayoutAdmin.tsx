@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import React, { FC } from 'react'
 import { NavbarAdmin } from '../admin'
+import { Footer } from '../Footer'
 
 interface Props {
     title: string,
@@ -23,6 +24,7 @@ export const LayoutAdmin: FC<Props> = ({ children, title }) => {
             <Box >
                 {children}
             </Box>
+            <Footer/>
         </>
     )
 }

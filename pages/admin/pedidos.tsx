@@ -44,16 +44,14 @@ const PedidosAdminPage: NextPage = () => {
                         }
                     />
                 </Box>
-                <Grid container spacing={2} sx={{justifyContent: { xs: 'center', sm: 'center', md: 'space-between', lg: 'space-between' } }}>
+                <Box display='flex' justifyContent='space-around'>
                     {pedidos_.map(e => (
-                        <Grid item xs={8} md={4} key={e.transactionId}>
-                            <Box sx={{ m: 2 }}>
-                                <CardComponent pedidoQr={`https://yotecielo.vercel.app/pedidos/${e.transactionId}`} numeroDePedido={e.transactionId} name={e.name} />
-                            </Box>
-                        </Grid>
+                        <Box key={e.transactionId}>
+                            <CardComponent pedidoQr={`https://yotecielo.vercel.app/pedidos/${e.transactionId}`} numeroDePedido={e.transactionId} name={e.name} />
+                        </Box>
                     ))
                     }
-                </Grid>
+                </Box>
             </LayoutAdmin >
         </>
     )
