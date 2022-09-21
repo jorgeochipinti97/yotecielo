@@ -118,7 +118,7 @@ const PedidosAdminPage: NextPage = () => {
                 <Grid container spacing={2}>
                     {pedidos_.map(e =>
                     (
-                        <Grid item xs={12} md={3} lg={3} xl={3}>
+                        <Grid item xs={12} md={3} lg={3} xl={3} key={e._id}>
                             <Box key={e.transactionId} display='flex' justifyContent='center' sx={{ m: 2 }}>
                                 <Card sx={{ width: 250 }}>
                                     <Box display='flex' justifyContent='end'>
