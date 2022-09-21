@@ -21,7 +21,7 @@ export const LayoutAdmin: FC<Props> = ({ children, title }) => {
                 <Image src='/yotecielo.png' width={200} height={70} alt='yotecielo' />
             </Box>
             <NavbarAdmin />
-            <Box >
+            <Box sx={{minHeight:'80vh'}}>
                 {children}
             </Box>
             <Footer/>

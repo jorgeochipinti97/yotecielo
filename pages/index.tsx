@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         {
           isLoading
             ? <FullScreenLoading />
-            : <Box display='flex' justifyContent='space-around' sx={{ mt: 5 }} flexWrap='wrap'>
+            : <Box display='flex' justifyContent='space-around' sx={{ mt: 5,minHeight:'50vh' }} flexWrap='wrap' alignItems='center'>
               <Box sx={{ m: 1 }}>
                 <SummaryTile title='Pedidos' subTitle={`${pedidos.length}`} icon={<QrCodeIcon sx={{ fontSize: 40 }} />} />
               </Box>
