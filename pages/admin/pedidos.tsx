@@ -93,7 +93,7 @@ const PedidosAdminPage: NextPage = () => {
                                 <Typography variant='h6' sx={{ color: 'black' }}>Numeros de orden a imprimir</Typography>
                                 {
                                     printPedidos.map(e => (
-                                        <Chip label={e.transactionId} color='success' sx={{ m: 1 }} />
+                                        <Chip label={e.transactionId} color='success' sx={{ m: 1 }} key={e.transactionId}/>
                                     ))
                                 }
                             </Box>
