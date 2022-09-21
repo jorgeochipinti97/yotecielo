@@ -15,9 +15,9 @@ export const Qrcode: FC<Props> = ({ url }) => {
                 type: 'image/jpeg',
                 quality: 0.3,
                 level: 'Q',
-                margin: 3,
+                margin: 2,
                 scale: 4,
-                width: 200,
+                width: 165,
                 color: {
                     dark: '#2596be',
                     light: '#FFFFFF',
