@@ -4,6 +4,7 @@ import Head from 'next/head'
 import React, { FC } from 'react'
 import { Footer } from '../Footer'
 import Image from 'next/image';
+import { Header } from '../ui'
 
 interface Props {
     title: string,
@@ -11,21 +12,14 @@ interface Props {
 }
 
 export const LayoutClient: FC<Props> = ({ children, title }) => {
-    const styles = {
-        paperContainer: {
-            backgroundColor: ' #5bb6d6'
-        }
-    };
 
     return (
         <>
             <Head>
                 <title>{title}</title>
             </Head>
-            <Box display='flex' justifyContent='center' sx={{ backgroundColor: 'white' }}>
-                <Image src='/yotecielo.png' width={200} height={70} alt='yotecielo' />
-            </Box>
-            <Box style={styles.paperContainer} sx={{height:'100vh'}} display='flex' flexDirection='column' justifyContent='space-between'>
+            <Header />
+            <Box >
                 {children}
                 <Footer />
             </Box>

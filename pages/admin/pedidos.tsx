@@ -59,28 +59,29 @@ const PedidosAdminPage: NextPage = () => {
     return (
         <>
             <LayoutAdmin title='Admin - Pedidos'>
-                {isGenerate &&
-                    (
-                        <>
-                            <Box sx={{ size: 'A4', backgroundColor: 'white', m: 2 }} display='flex' ref={printRef} >
-                                {
-                                    printPedidos.map(e => (
-                                        <Box sx={{ border: '1px solid grey' }} key={e._id}>
-                                            <CardComponent pedidoQr={`https://yotecielo.vercel.app/pedidos/${e.transactionId}`} numeroDePedido={e.transactionId} name={e.name} />
-                                        </Box>
-                                    ))}
-                            </Box>
-                            <Box display='flex' justifyContent='center' sx={{ mt: 2, mb: 3 }}>
-                                <Button
-                                    variant='contained'
-                                    color='success'
-                                    onClick={handleDownloadImage}
-                                >
-                                    Descargar imagen
-                                </Button>
-                            </Box>
-                        </>
-                    )}
+                <Box>
+                    {isGenerate &&
+                        (
+                            <>
+                                <Box sx={{ size: 'A4', backgroundColor: 'white', m: 2 }} display='flex' ref={printRef} >
+                                    {
+                                        printPedidos.map(e => (
+                                            <Box sx={{ border: '1px solid grey' }} key={e._id}>
+                                                <CardComponent pedidoQr={`https://yotecieloapp.vercel.app/pedidos/${e._id}`} numeroDePedido={e.transactionId} name={`${e.name} ${e.lastname}`} />
+                                            </Box>
+                                        ))}
+                                </Box>
+                                <Box display='flex' justifyContent='center' sx={{ mt: 2, mb: 3 }}>
+                                    <Button
+                                        variant='contained'
+                                        color='success'
+                                        onClick={handleDownloadImage}>
+                                        Descargar imagen
+                                    </Button>
+                                </Box>
+                            </>
+                        )}
+                </Box>
                 <Divider />
                 {!isGenerate &&
                     <Box display='flex' justifyContent='center' sx={{ m: 2 }}>
@@ -130,6 +131,7 @@ const PedidosAdminPage: NextPage = () => {
                                     </Box>
                                     <Typography variant='h6' sx={{ textAlign: 'center' }}>{e.transactionId}</Typography>
                                     <Typography variant='subtitle1' sx={{ textAlign: 'center' }}>{capitalize(e.name)}</Typography>
+                                    <Typography variant='subtitle1' sx={{ textAlign: 'center' }}>{e._id}</Typography>
                                     <Box display='flex' justifyContent='center' sx={{ mt: 3 }}>
 
                                         <Button

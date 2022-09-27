@@ -2,11 +2,11 @@ import { db } from ".";
 import { pedido } from "../interfaces";
 import Pedido from "../Models/Pedido";
 
-export const getPedidoById = async (transactionId: string): Promise<pedido | null> => {
+export const getPedidoById = async (_id: string): Promise<pedido | null> => {
     try {
 
         await db.connect();
-        const pedido = await Pedido.findOne({ transactionId }).lean();
+        const pedido = await Pedido.findOne({ _id }).lean();
         await db.disconnect();
 
         if (!pedido) {
@@ -27,7 +27,7 @@ export const getAllPedidos = async (): Promise<pedido | null> => {
     try {
 
         await db.connect();
-        const pedido = await Pedido.find().sort({"createdAt": -1}) 
+        const pedido = await Pedido.find().sort({ "createdAt": -1 })
         await db.disconnect();
         if (!pedido) {
             return null;

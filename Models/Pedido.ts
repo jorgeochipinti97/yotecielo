@@ -3,8 +3,9 @@ import { pedido } from '../interfaces';
 
 const pedidoSchema = new Schema({
     name: { type: String },
+    lastname: { type: String },
     email: { type: String },
-    transactionId: { type: String, unique: true },
+    transactionId: { type: String, },
     message: { type: String },
     images: [{ type: String }],
 }, {

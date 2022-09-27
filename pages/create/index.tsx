@@ -13,6 +13,7 @@ import QRcode from 'qrcode';
 
 interface FormData {
     name: string
+    lastname: string
     email: string
     transactionId: string
     message: string
@@ -27,13 +28,14 @@ const Create = () => {
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [messageLength, setMessageLength] = useState<any>(0)
     const AnchorRef = useRef<HTMLAnchorElement>(null)
-    const [qr_, setQr_] = useState<string>()
+    const [isSubmit, setIsSubmit] = useState(false)
 
 
 
     const { register, handleSubmit, formState: { errors }, getValues, setValue, watch } = useForm<FormData>({
         defaultValues: {
             name: '',
+            lastname: '',
             email: '',
             transactionId: '',
             message: '',
@@ -46,7 +48,7 @@ const Create = () => {
     const onSubmit = async (form: FormData) => {
         try {
 
-         
+
             if (isValidEmail(form.email)) {
                 const { data } = await EmentorsApi({
                     url: '/pedidos',
@@ -54,7 +56,7 @@ const Create = () => {
                     data: form
                 })
                 console.log({ data })
-                router.replace(`/pedidos/${form.transactionId}`);
+                router.replace(`/pedidos/${data._id}`);
             } else {
                 alert('Por favor revisa tu mail')
             }
@@ -89,60 +91,86 @@ const Create = () => {
         );
     }
 
-    const createQR = async (transactionId: string) => {
+    const styles = {
+        paperContainer: {
+            minHeigth: '100vh',
+            backgroundImage: `url(https://i.pinimg.com/736x/dc/b9/42/dcb942d66f560b3e12a84d91502ee5aa.jpg)`,
+            backgroundSize: 'cover'
 
-        try {
-            const url = await QRcode.toDataURL(`https://yotecielo.vercel.app/pedidos/${transactionId}`)
-            setQr_(url)
-        } catch (err) {
-            console.log(err)
         }
     }
     return (
         <>
             <LayoutClient title='Crea tu mensaje'>
-                <Box sx={{ backgroundColor: 'aliceblue', pb: 20 }} >
-                    <Box display='flex' justifyContent='center' sx={{ mt: 3 }}>
-                        <Typography variant='h4' sx={{ textAlign: 'center', color: 'black' }}>Crea tu mensaje personalizado</Typography>
+                <Box style={styles.paperContainer} sx={{
+                    backgroundColor: '#5bb6d6', pb: 20
+                }} >
+                    <Box display='flex' justifyContent='center' >
+                        <Typography variant='h3' sx={{ pt: 3, fontFamily: 'Special Elite', textAlign: 'center',color:'black' }}>
+                            Crea tu mensaje personalizado
+                        </Typography>
                     </Box>
+
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <FormGroup>
                             <Box flexDirection='column'>
-                                <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
-                                    <TextField label="Número de Pedido" variant="filled"
+                                <Box display='flex' justifyContent='center' sx={{ mt: 5 }}>
+                                    <TextField label="Número de Pedido" variant="outlined"
+                                        className="inputRounded"
+
                                         {...register('transactionId', {
                                             required: 'Este campo es requerido',
                                             minLength: { value: 2, message: 'Mínimo 2 caracteres' }
                                         })}
                                     />
+
                                 </Box>
                                 <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
 
-                                    <TextField label="Nombre" variant="filled"
+                                    <TextField label="Nombre" variant="outlined"
+                                        className="inputRounded"
 
                                         {...register('name', {
                                             required: 'Este campo es requerido',
                                             minLength: { value: 2, message: 'Mínimo 2 caracteres' }
                                         })}
                                     />
+
                                 </Box>
                                 <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
-                                    <TextField label="Email" variant="filled"
+
+                                    <TextField label="Apellido" variant="outlined"
+                                        className="inputRounded"
+
+                                        {...register('lastname', {
+                                            required: 'Este campo es requerido',
+                                            minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                        })}
+                                    />
+
+                                </Box>
+                                <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
+
+                                    <TextField label="Email" variant="outlined"
                                         {...register('email', {
                                             required: 'Este campo es requerido',
                                             minLength: { value: 2, message: 'Mínimo 2 caracteres' },
                                         })}
+                                        className="inputRounded"
+
                                     />
+
                                 </Box>
                                 <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
                                     <Box display='flex' flexDirection='column'>
                                         <Box display='flex' justifyContent='center' sx={{ mt: 2 }}>
 
+
                                             <TextField
                                                 label="Mensaje"
                                                 multiline
                                                 rows={4}
-                                                variant="filled"
+                                                variant="outlined"
                                                 {...register('message', {
                                                     required: 'Este campo es requerido',
                                                     minLength: { value: 2, message: 'Mínimo 2 caracteres' },
@@ -150,9 +178,12 @@ const Create = () => {
 
                                                 })}
                                                 onChange={(e) => setMessageLength(e.target.value.length)}
+                                                className="inputRounded"
+
                                             />
+
                                         </Box>
-                                        <Box display='flex' justifyContent='end' sx={{ mt: 2, position: 'relative', bottom: '55px', right: '2px', zIndex: 'tooltip' }}>
+                                        <Box display='flex' justifyContent='end' sx={{ mt: 2, position: 'relative', bottom: '65px', right: '2px', zIndex: 'tooltip' }}>
                                             <Chip label={`${messageLength}/140`} variant='outlined' color={messageLength > 140 ? 'error' : 'primary'} />
                                         </Box>
                                     </Box>
@@ -162,7 +193,7 @@ const Create = () => {
                                     <Button
                                         variant='outlined'
                                         startIcon={<UploadOutlined />}
-                                        sx={{ mb: 3 }}
+                                        sx={{ mb: 3, backgroundColor: 'white' }}
                                         onClick={() => fileInputRef.current?.click()}
                                     >
                                         Cargar imagen
@@ -205,12 +236,17 @@ const Create = () => {
                                     <Button
                                         variant='outlined'
                                         startIcon={<SendIcon />}
-                                        sx={{ mb: 3 }}
+                                        sx={{ mb: 3, backgroundColor: 'white' }}
                                         type='submit'
                                     >
                                         Enviar
                                     </Button>
-
+                                    {
+                                        isSubmit &&
+                                        (
+                                            <Chip label='por favor espere...' color='success' />
+                                        )
+                                    }
                                 </Box>
                             </Box>
                         </FormGroup>
