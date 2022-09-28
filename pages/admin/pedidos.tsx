@@ -131,7 +131,6 @@ const PedidosAdminPage: NextPage = () => {
                                     </Box>
                                     <Typography variant='h6' sx={{ textAlign: 'center' }}>{e.transactionId}</Typography>
                                     <Typography variant='subtitle1' sx={{ textAlign: 'center' }}>{capitalize(e.name)}</Typography>
-                                    <Typography variant='subtitle1' sx={{ textAlign: 'center' }}>{e._id}</Typography>
                                     <Box display='flex' justifyContent='center' sx={{ mt: 3 }}>
 
                                         <Button
