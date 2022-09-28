@@ -16,7 +16,7 @@ export const CardComponent: FC<Props> = ({ pedidoQr, numeroDePedido, name }) => 
   const styles = {
     paperContainer: {
       minHeigth: '100vh',
-      backgroundImage: `url(https://res.cloudinary.com/djk4q3tys/image/upload/v1663688018/lfhpzoa0gz2m2ro23f9e.png)`,
+      backgroundImage: `url(https://res.cloudinary.com/djk4q3tys/image/upload/v1664338667/hxpvv4hhn53wzwqmlskq.png)`,
       backgroundRepeat: 'no-repeat'
     }
   };
